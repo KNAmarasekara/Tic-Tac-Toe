@@ -63,16 +63,19 @@ int winCondition[8][3]  = {
 	{1,2,3}, {4,5,6}, {7,8,9}, {1,4,7}, {2,5,8}, {3,6,9}, {1,5,9}, {3,5,7}
 };
  for (int i = 0; i < 8; i++) { // checking for a win
-	if (sq[winCondition[i][0]] == sq[winCondition[1][0]] && sq[winCondition[i][1]] == sq[winCondition[i][2]] ) {
-	     return 1; 
+	if (sq[winCondition[i][0]] == sq[winCondition[i][1]] && sq[winCondition[i][1]] == sq[winCondition[i][2]] ) {
+	     return 1;
+	} 
 	}
-}	
+	for (int i = 1; i <= 9; i++) {
+         	if (sq[i] != 'x' && sq[i] != 'o') {
+	        	return -1; // game is still ongoing
 
-for (int i = 1; i <= 9; i++) {
-	if (sq[i] != 'x' && sq[i] != 'o') {
-		return -1; // game is still ongoing
-	}
+		}
 }
+
+
+
 return 0; // draw
 
 }
