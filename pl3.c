@@ -6,16 +6,16 @@ char sqr[17] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
 int checkWin() ;
 void drawBoard() ;
 
-void main() {
+int  main() {
 	int player = 1, i, choice;
-	char mark; //x,o,z
+	char mark[3] = {'x','o', 'z'}; //x,o,z
 
 	do {
 		drawBoard();
 		player = (player % 3) ? 1 : 3;
 		printf("Player %d, enter your choice: ", player);
 		scanf("%d", &choice);
-		mark = (player == 1) ? 'x' :'o' : 'z';
+	        mark = mark[(player - 1) % 3];
 
 		if(choice == 1 && sqr[1] =='1') {
 			sqr[1] = mark;
@@ -116,7 +116,34 @@ int checkWin() {
                 return 1;
 
 	// checking for a draw
-	else if
+	else if (sqr[1] != '1' &&  sqr[2] != '2' && sqr[3] != '3' && sqr[4] != '4' && sqr[5] != '5' && sqr[6] != '6' && sqr[7] != '7' && sqr[8] != '8' && sqr[9] != '9' && sqr[10] != 'a' && sqr[11] != 'b' && sqr[12] != 'c' && sqr[13] != 'd' && sqr[14] != 'e' && sqr[15] != 'f' && sqr[16] != 'g' && sqr[17] != 'h') 
+		return 0;     // draw
+
+	else 
+		return -1;    // still playing
+}
+
+
+//making the drawboard
+
+void drawBoard() {
+	system("clear");
+	printf("\n\n\t Tic Tac Toe\n\n");
+	printf("Player1 (x) - Player2 (o) - Player3 (z) \n\n\n");
+	printf("     |     |     |     \n");
+	printf("  %c  |  %c  |  %c  |  %c  \n", sqr[1], sqr[2], sqr[3], sqr[4]);
+	printf("_____|_____|_____|_____\n");
+        printf("     |     |     |     \n");
+        printf("  %c  |  %c  |  %c  |  %c  \n", sqr[5], sqr[6], sqr[7], sqr[8]);
+        printf("_____|_____|_____|_____\n");
+        printf("     |     |     |     \n");
+        printf("  %c  |  %c  |  %c  |  %c  \n", sqr[9], sqr[10], sqr[11], sqr[12]);
+        printf("_____|_____|_____|_____\n");
+        printf("     |     |     |     \n");
+        printf("  %c  |  %c  |  %c  |  %c  \n", sqr[13], sqr[14], sqr[15], sqr[16]);
+        printf("     |     |     |     \n");
+
+}
 
 
 
