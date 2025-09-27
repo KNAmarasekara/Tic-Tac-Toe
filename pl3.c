@@ -7,70 +7,41 @@ int checkWin() ;
 void drawBoard() ;
 
 int  main() {
-	int player = 1, i, choice;
-	char mark[3] = {'x','o', 'z'}; //x,o,z
+	int player = 1, i;
+        char choice;
+       	char mark[3] = {'x', 'o', 'z'}; //x,o,z
 
 	do {
 		drawBoard();
-		player = (player % 3) ? 1 : 3;
+		player = (player % 3 == 0) ? 3 : player % 3;
+		
+	        char currentMark = mark[player - 1];
+
 		printf("Player %d, enter your choice: ", player);
-		scanf("%d", &choice);
-	        mark = mark[(player - 1) % 3];
 
-		if(choice == 1 && sqr[1] =='1') {
-			sqr[1] = mark;
-		}
-		else if (choice == '2' && sqr[2] == '2') {
-			sqr[2] = mark;
-		}
-		 else if (choice == '3' && sqr[3] == '3') {
-                        sqr[3] = mark;
-                }
-                 else if (choice == '4' && sqr[4] == '4') {
-                        sqr[4] = mark;
-                }
-                 else if (choice == '5' && sqr[5] == '5') {
-                        sqr[5] = mark;
-                }
-                 else if (choice == '6' && sqr[6] == '6') {
-                        sqr[6] = mark;
-                }
-                 else if (choice == '7' && sqr[7] == '7') {
-                        sqr[7] = mark;
-                }
-                 else if (choice == '8' && sqr[8] == '8') {
-                        sqr[8] = mark;
-                }
-                 else if (choice == '9' && sqr[9] == '9') {
-                        sqr[9] = mark;
-                }
-                 else if (choice == 'a' && sqr[10] == 'a') {
-                        sqr[10] = mark;
-                }
-                 else if (choice == 'b' && sqr[11] == 'b') {
-                        sqr[11] = mark;
-                }
-                 else if (choice == 'c' && sqr[12] == 'c') {
-                        sqr[12] = mark;
-                }
-                 else if (choice == 'd' && sqr[13] == 'd') {
-                        sqr[13] = mark;
-                }
-                 else if (choice == 'e' && sqr[14] == 'e') {
-                        sqr[14] = mark;
-                }
-                 else if (choice == 'f' && sqr[15] == 'f') {
-                        sqr[15] = mark;
-                }
-                 else if (choice == 'g' && sqr[16] == 'g') {
-                        sqr[16] = mark;
-                }
+		char in;
+		scanf("%c", &in);
 
+	        if(in >= '1' && in <= 'g') {
+		choice = in - '0';
+		}
+
+		else if( in >= 'a' && in <= 'g') {
+		choice = in - 'a' + 10;
+		}
 		else {
-			printf("Invalide option!!!!!!!!");
-			player--;
-			getchar();
+		printf("Invalid Option!!!!\n");
+	        continue ;
 		}
+
+         	if (sqr[choice] == in) {
+                	sqr[choice] = currentMark;
+	}
+          	else {
+		        printf("Invalid move! spot aready taken!\n");
+		continue;
+	}
+
 		i = checkWin();
 		player++;
 
@@ -78,7 +49,7 @@ int  main() {
 	
 	drawBoard();
 	if(i == 1){
-		printf("==> Player %d wins", --player);
+		printf("==> Player %d wins", (player - 1) % 3 == 0 ? 3 : (player - 1) % 3);
 	}
 	else {
 		printf("==> The game is a Draw");
@@ -116,7 +87,7 @@ int checkWin() {
                 return 1;
 
 	// checking for a draw
-	else if (sqr[1] != '1' &&  sqr[2] != '2' && sqr[3] != '3' && sqr[4] != '4' && sqr[5] != '5' && sqr[6] != '6' && sqr[7] != '7' && sqr[8] != '8' && sqr[9] != '9' && sqr[10] != 'a' && sqr[11] != 'b' && sqr[12] != 'c' && sqr[13] != 'd' && sqr[14] != 'e' && sqr[15] != 'f' && sqr[16] != 'g' && sqr[17] != 'h') 
+	else if (sqr[1] != '1' &&  sqr[2] != '2' && sqr[3] != '3' && sqr[4] != '4' && sqr[5] != '5' && sqr[6] != '6' && sqr[7] != '7' && sqr[8] != '8' && sqr[9] != '9' && sqr[10] != 'a' && sqr[11] != 'b' && sqr[12] != 'c' && sqr[13] != 'd' && sqr[14] != 'e' && sqr[15] != 'f' && sqr[16] != 'g') 
 		return 0;     // draw
 
 	else 
