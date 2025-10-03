@@ -4,32 +4,40 @@
 
 char checkWin1();
 void drawBoard1();
-void playerMove();
-void aiMove();
+void playerMove1();
+void aiMove1();
+
 int checkWin2();
 void drawBoard2();
-void playerMove();
+
 void playerOne();
 void playerTwo();
+void playerThree();
 
-
+void drawBoard3();
+int checkWin3();
+void playerMove3();
+void aiMove3();
 
 int sq[10] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+char sqr[17] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G'};
 
 
 int main() {
 	int num;
-	printf("\n\n\nTIC TAC TOE \n\n\n");
-	printf("\n 1.Player vs Computer \n");
-	printf("\n 2.Player vs Player \n");
-	printf("\n 3.Player vs Player vs Player \n");
-	printf("\nEnter the number of the game of your choice(or any other number to exit): \n");
+	printf("\n\n\n     TIC TAC TOE \n\n\n");
+	printf("   1.Player vs Computer \n");
+	printf("   2.Player vs Player \n");
+	printf("   3.Player vs Player vs Computer \n");
+	printf("\n   Enter the number of the game of your choice(or any other number to exit): ");
 	scanf("%d", &num);
 
 	if(num == 1)
 		playerOne();
 	else if(num == 2)
 		playerTwo();
+	else if(num == 3)
+		playerThree();
 	
 	else
 		printf("Game is over");
@@ -47,9 +55,9 @@ void playerOne() {
         do {
                 drawBoard1();
                 if (turn == 1) {
-                        playerMove();
+                        playerMove1();
                 } else{
-                        aiMove();
+                        aiMove1();
                 }
 
                 gameStatus = checkWin1();
@@ -116,10 +124,38 @@ void playerTwo() {
 
 
 
+void  playerThree() {
+        int gameStatus;
+        int turn = 1;  // player1 is 1 and player2 is 2 ai is 3
+        int currentPlayer;
 
+        srand(time(0));
 
+        do {
+                drawBoard3();
+                currentPlayer = turn;
 
+                if (turn == 1 || turn == 2) {
+                        playerMove3(turn);
+                } else{
+                        aiMove3();
+                }
 
+                gameStatus = checkWin3();
+                turn = (turn % 3) + 1;
+
+        }while (gameStatus == -1);
+
+        drawBoard3();
+
+        if (gameStatus == 1) {
+                const char* winner = (currentPlayer == 1)? "Player 1 (x)": (currentPlayer == 2) ? "Player 2 (o)" : "Computer (z)";
+                printf("==>\a %s wins!\n", winner);
+        } else {
+                printf("==> \a It's a Draw\n");
+        }
+    
+}
 
 
 
@@ -176,8 +212,46 @@ int winCondition[8][3]  = {
 
 }
 
+int checkWin3() {
 
-void playerMove() {
+        //winning conditions for rows
+        if (sqr[1] == sqr[2] && sqr[2] == sqr[3] && sqr[3] == sqr[4])
+                return 1;
+        else if (sqr[5] == sqr[6] && sqr[6] == sqr[7] && sqr[7] == sqr[8])
+                return 1;
+        else if (sqr[9] == sqr[10] && sqr[10] == sqr[11] && sqr[11] == sqr[12])
+                return 1;
+        else if (sqr[13] == sqr[14] && sqr[14] == sqr[15] && sqr[15] == sqr[16])
+                return 1;
+
+        //winning conditions for colums
+        else if (sqr[1] == sqr[5] && sqr[5] == sqr[9] && sqr[9] == sqr[13])
+                return 1;
+        else if (sqr[2] == sqr[6] && sqr[6] == sqr[10] && sqr[10] == sqr[14])
+                return 1;
+        else if (sqr[3] == sqr[7] && sqr[7] == sqr[11] && sqr[11] == sqr[15])
+                return 1;
+        else if (sqr[4] == sqr[8] && sqr[8] == sqr[12] && sqr[12] == sqr[16])
+                return 1;
+
+
+        // winning conditons for cross
+        else if (sqr[1] == sqr[6] && sqr[6] == sqr[11] && sqr[11] == sqr[16])
+                return 1;
+        else if (sqr[4] == sqr[7] && sqr[7] == sqr[10] && sqr[10] == sqr[13])
+                return 1;
+
+        // checking for a draw
+        else if (sqr[1] != '1' &&  sqr[2] != '2' && sqr[3] != '3' && sqr[4] != '4' && sqr[5] != '5' && sqr[6] != '6' && sqr[7] != '7' && sqr[8] != '8' && sqr[9] != '9' && sqr[10] != 'A' && sqr[11] != 'B' && sqr[12] != 'C' && sqr[13] != 'D' && sqr[14] != 'E' && sqr[15] != 'F' && sqr[16] != 'G')
+                return 0;     // draw
+
+        else
+                return -1;    // still playing
+}
+
+
+
+void playerMove1() {
         int choice;
         char mark = 'x';
 
@@ -207,12 +281,31 @@ void playerMove() {
                 printf("Invalid option!!!!");
                 getchar(); // waiting for entering
                 getchar(); //pause
-                playerMove(); // retry
+                playerMove1(); // retry
 
         }
 }
 
-void aiMove() {
+void playerMove3(int player) {
+        int choice;
+        char mark = (player == 1) ? 'x': 'o';
+
+        while(1){
+                printf("\nPlayer %d (%c), enter your choice(1-16): ", player, mark);
+                scanf("%d", &choice);
+
+                if(choice >= 1 && choice <= 16 && sqr[choice] != 'x' && sqr[choice] != 'o') {
+                        sqr[choice] = mark;
+                break;
+
+              } else {
+                     printf("Invalid move! Try again.\n");
+              }
+        }
+}
+
+
+void aiMove1() {
         int choice;
         char mark = 'o';
 
@@ -224,6 +317,18 @@ void aiMove() {
         sq[choice] = mark;
 }
 
+
+void aiMove3() {
+        int choice;
+        char mark = 'z';
+
+        do{
+                choice = rand() % 16 + 1;
+        } while (sqr[choice] == 'x' || sqr[choice] == 'o' || sqr[choice] == 'z');
+
+        printf("The computer is making a choice.......computer chooses %d\n", choice);
+        sqr[choice] = mark;
+}
 
 
 
@@ -262,6 +367,25 @@ void drawBoard2() {
 }
 
 
+void drawBoard3() {
+        system("clear");
+        printf("\n\n\t Tic Tac Toe\n\n");
+        printf("Player1 (x) - Player2 (o) - Computer (z) \n\n\n");
+        printf("Please enter numbers between A-G as A -> 10  B -> 11  c -> 12.....\n\n\n\n\n");
+        printf("     |     |     |     \n");
+        printf("  %c  |  %c  |  %c  |  %c  \n", sqr[1], sqr[2], sqr[3], sqr[4]);
+        printf("_____|_____|_____|_____\n");
+        printf("     |     |     |     \n");
+        printf("  %c  |  %c  |  %c  |  %c  \n", sqr[5], sqr[6], sqr[7], sqr[8]);
+        printf("_____|_____|_____|_____\n");
+        printf("     |     |     |     \n");
+        printf("  %c  |  %c  |  %c  |  %c  \n", sqr[9], sqr[10], sqr[11], sqr[12]);
+        printf("_____|_____|_____|_____\n");
+        printf("     |     |     |     \n");
+        printf("  %c  |  %c  |  %c  |  %c  \n", sqr[13], sqr[14], sqr[15], sqr[16]);
+        printf("     |     |     |     \n");
+
+}
 
 	
   
