@@ -116,7 +116,8 @@ int checkWin() {
 void drawBoard() {
 	system("clear");
 	printf("\n\n\t Tic Tac Toe\n\n");
-	printf("Player1 (x) - Player2 (o) - Player3 (z) \n\n\n");
+	printf("Player1 (x) - Player2 (o) - Computer (z) \n\n\n");
+	printf("Please enter numbers between A-G as A -> 10  B -> 11  c -> 12.....\n\n\n\n\n");
 	printf("     |     |     |     \n");
 	printf("  %c  |  %c  |  %c  |  %c  \n", sqr[1], sqr[2], sqr[3], sqr[4]);
 	printf("_____|_____|_____|_____\n");
