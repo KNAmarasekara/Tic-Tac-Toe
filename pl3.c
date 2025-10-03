@@ -1,60 +1,77 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 
 char sqr[17] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G'};
 
 int checkWin() ;
 void drawBoard() ;
+void playerMove();
+void aiMove();
 
 int  main() {
-	int player = 1, i;
-        char choice;
-       	char mark[3] = {'x', 'o', 'z'}; //x,o,z
+        int gameStatus;
+        int turn = 1;  // player1 is 1 and player2 is 2 ai is 3
+	int currentPlayer;
 
-	do {
-		drawBoard();
-		player = (player % 3 == 0) ? 3 : player % 3;
-		
-	        char currentMark = mark[player - 1];
+        srand(time(0));
 
-		printf("Player %d, enter your choice: ", player);
+        do {
+                drawBoard();
+		currentPlayer = turn;
 
-		char in;
-		scanf(" %c", &in);
+                if (turn == 1 || turn == 2) {
+                        playerMove(turn);
+                } else{
+                        aiMove();
+                }
 
-	        if(in >= '1' && in <= '9') {
-		        choice = in - '0';
-			
-		}
+                gameStatus = checkWin();
+                turn = (turn % 3) + 1;
 
-		else if (in >= 'A' && in <= 'G'){
-			choice = in - 'A' + 10;
-			
-		}	
+        }while (gameStatus == -1);
 
-		
-		else if (sqr[choice] != 'x' && sqr[choice] != 'o' && sqr[choice] != 'z') {
-			sqr[choice] = currentMark;
-		}
-          	else {
-		        printf("Invalid move! spot aready taken!\n");
-		continue;
-	}
+        drawBoard();
 
-		i = checkWin();
-		player++;
-
-	}while (i == -1); // game over
-	
-	drawBoard();
-	if(i == 1){
-		printf("==> Player %d wins", (player - 1) % 3 == 0 ? 3 : (player - 1) % 3);
-	}
-	else {
-		printf("==> The game is a Draw");
-	}
-	return 0;
+        if (gameStatus == 1) {
+		const char* winner = (currentPlayer == 1)? "Player 1 (x)": (currentPlayer == 2) ? "Player 2 (o)" : "Computer (z)";
+                printf("==>\a %s wins!\n", winner);
+        } else {
+                printf("==> \a It's a Draw\n");
+        }
+        return 0;
 }
+
+void playerMove(int player) {
+        int choice;
+        char mark = (player == 1) ? 'x': 'o';
+
+	while(1){
+		printf("Player %d (%c), enter your choice(1-16): ", player, mark);
+		scanf("%d", &choice);
+
+		if(choice >= 1 && choice <= 16 && sqr[choice] != 'x' && sqr[choice] != 'o') {
+			sqr[choice] = mark;
+		break;
+
+	      } else {
+		     printf("Invalid move! Try again.\n");
+	      } 
+        }
+}
+
+void aiMove() {
+        int choice;
+        char mark = 'z';
+
+        do{
+                choice = rand() % 16 + 1;
+        } while (sqr[choice] == 'x' || sqr[choice] == 'o' || sqr[choice] == 'z');
+
+        printf("The computer is making a choice.......computer chooses %d\n", choice);
+        sqr[choice] = mark;
+}
+
 
 int checkWin() {
 
