@@ -19,10 +19,10 @@ int checkWin3();
 void playerMove3();
 void aiMove3();
 
-int sq[10] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-char sqr[17] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G'};
+int sq[10] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};                                           //array for single player and dual player
+char sqr[17] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G'};      //array for three player
 
-
+//The main body of the game
 int main() {
 	int num;
 	printf("\n\n\n     TIC TAC TOE \n\n\n");
@@ -40,12 +40,13 @@ int main() {
 		playerThree();
 	
 	else
-		printf("Game is over");
+		printf("You exited the game.\n");
 
 	return 0;
 
 }
 
+//body of player vs computer
 void playerOne() {
         int gameStatus;
         int turn = 1;  // player is 1 and ai is 2
@@ -75,7 +76,7 @@ void playerOne() {
         
 }
 
-
+//body of player vs player
 void playerTwo() {
         int player = 1, i, choice;
         char mark; // x,o
@@ -123,7 +124,7 @@ void playerTwo() {
 
 
 
-
+//body of player vs player vs computer
 void  playerThree() {
         int gameStatus;
         int turn = 1;  // player1 is 1 and player2 is 2 ai is 3
@@ -159,8 +160,8 @@ void  playerThree() {
 
 
 
-//cheking if there is a win
-int checkWin2() {
+                                                              
+int checkWin2() {                                   //checking for a win in dual player
         if(sq[1] == sq[2] && sq[2] == sq[3])
                 return 1;
         else if (sq[4] == sq[5] && sq[5] == sq[6])
@@ -191,10 +192,9 @@ int checkWin2() {
 
 
 
-char checkWin1() {
+char checkWin1() {                                       //checking for a win in single player
 
-
-int winCondition[8][3]  = {
+	int winCondition[8][3]  = {
         {1,2,3}, {4,5,6}, {7,8,9}, {1,4,7}, {2,5,8}, {3,6,9}, {1,5,9}, {3,5,7}
 };
  for (int i = 0; i < 8; i++) { // checking for a win
@@ -212,7 +212,7 @@ int winCondition[8][3]  = {
 
 }
 
-int checkWin3() {
+int checkWin3() {                                         //checking for a win in multiplayer
 
         //winning conditions for rows
         if (sqr[1] == sqr[2] && sqr[2] == sqr[3] && sqr[3] == sqr[4])
@@ -251,7 +251,7 @@ int checkWin3() {
 
 
 
-void playerMove1() {
+void playerMove1() {            //player move for single player
         int choice;
         char mark = 'x';
 
@@ -286,7 +286,7 @@ void playerMove1() {
         }
 }
 
-void playerMove3(int player) {
+void playerMove3(int player) {         //player move for multiplayer
         int choice;
         char mark = (player == 1) ? 'x': 'o';
 
@@ -305,7 +305,7 @@ void playerMove3(int player) {
 }
 
 
-void aiMove1() {
+void aiMove1() {                     //AI move for single player
         int choice;
         char mark = 'o';
 
@@ -318,7 +318,7 @@ void aiMove1() {
 }
 
 
-void aiMove3() {
+void aiMove3() {                    //AI move for multiplayer
         int choice;
         char mark = 'z';
 
@@ -333,57 +333,60 @@ void aiMove3() {
 
 
 
-//making the drawboard
-void drawBoard1() {
+void drawBoard1() {                                     //drawboard for single player 3x3
         system("clear");
         printf("\n\n\t Tic Tac Toe \n\n");
         printf("Player1 (x) - Computer (o) \n\n\n");
-        printf("     |     |     \n");
-        printf("  %c  |  %c  |  %c  \n", sq[1],sq[2],sq[3]);
-        printf("_____|_____|_____\n");
-        printf("     |     |     \n");
-        printf("  %c  |  %c  |  %c  \n", sq[4],sq[5],sq[6]);
-        printf("_____|_____|_____\n");
-        printf("     |     |     \n");
-        printf("  %c  |  %c  |  %c  \n", sq[7],sq[8],sq[9]);
-        printf("     |     |     \n");
+        printf("___________________\n");
+        printf("|     |     |     |\n");
+        printf("|  %c  |  %c  |  %c  |\n", sq[1],sq[2],sq[3]);
+        printf("|_____|_____|_____|\n");
+        printf("|     |     |     |\n");
+        printf("|  %c  |  %c  |  %c  |\n", sq[4],sq[5],sq[6]);
+        printf("|_____|_____|_____|\n");
+        printf("|     |     |     |\n");
+        printf("|  %c  |  %c  |  %c  |\n", sq[7],sq[8],sq[9]);
+        printf("|_____|_____|_____|\n");
+
 
 }
 
-void drawBoard2() {
+void drawBoard2() {                                     //drawboard for dual player 3x3
         system("clear");
         printf("\n\n\t Tic Tac Toe \n\n");
         printf("Player1 (x) - Player2 (o) \n\n\n");
-        printf("     |     |     \n");
-        printf("  %c  |  %c  |  %c  \n", sq[1],sq[2],sq[3]);
-        printf("_____|_____|_____\n");
-        printf("     |     |     \n");
-        printf("  %c  |  %c  |  %c  \n", sq[4],sq[5],sq[6]);
-        printf("_____|_____|_____\n");
-        printf("     |     |     \n");
-        printf("  %c  |  %c  |  %c  \n", sq[7],sq[8],sq[9]);
-        printf("     |     |     \n");
+	printf("___________________\n");
+        printf("|     |     |     |\n");
+        printf("|  %c  |  %c  |  %c  |\n", sq[1],sq[2],sq[3]);
+        printf("|_____|_____|_____|\n");
+        printf("|     |     |     |\n");
+        printf("|  %c  |  %c  |  %c  |\n", sq[4],sq[5],sq[6]);
+        printf("|_____|_____|_____|\n");
+        printf("|     |     |     |\n");
+        printf("|  %c  |  %c  |  %c  |\n", sq[7],sq[8],sq[9]);
+        printf("|_____|_____|_____|\n");
 
 }
 
 
-void drawBoard3() {
+void drawBoard3() {                                     //drawboard for multiplayer 4x4 
         system("clear");
         printf("\n\n\t Tic Tac Toe\n\n");
         printf("Player1 (x) - Player2 (o) - Computer (z) \n\n\n");
         printf("Please enter numbers between A-G as A -> 10  B -> 11  c -> 12.....\n\n\n\n\n");
-        printf("     |     |     |     \n");
-        printf("  %c  |  %c  |  %c  |  %c  \n", sqr[1], sqr[2], sqr[3], sqr[4]);
-        printf("_____|_____|_____|_____\n");
-        printf("     |     |     |     \n");
-        printf("  %c  |  %c  |  %c  |  %c  \n", sqr[5], sqr[6], sqr[7], sqr[8]);
-        printf("_____|_____|_____|_____\n");
-        printf("     |     |     |     \n");
-        printf("  %c  |  %c  |  %c  |  %c  \n", sqr[9], sqr[10], sqr[11], sqr[12]);
-        printf("_____|_____|_____|_____\n");
-        printf("     |     |     |     \n");
-        printf("  %c  |  %c  |  %c  |  %c  \n", sqr[13], sqr[14], sqr[15], sqr[16]);
-        printf("     |     |     |     \n");
+	printf("_________________________\n");
+        printf("|     |     |     |     |\n");
+        printf("|  %c  |  %c  |  %c  |  %c  |\n", sqr[1], sqr[2], sqr[3], sqr[4]);
+        printf("|_____|_____|_____|_____|\n");
+        printf("|     |     |     |     |\n");
+        printf("|  %c  |  %c  |  %c  |  %c  |\n", sqr[5], sqr[6], sqr[7], sqr[8]);
+        printf("|_____|_____|_____|_____|\n");
+        printf("|     |     |     |     |\n");
+        printf("|  %c  |  %c  |  %c  |  %c  |\n", sqr[9], sqr[10], sqr[11], sqr[12]);
+        printf("|_____|_____|_____|_____|\n");
+        printf("|     |     |     |     |\n");
+        printf("|  %c  |  %c  |  %c  |  %c  |\n", sqr[13], sqr[14], sqr[15], sqr[16]);
+        printf("|_____|_____|_____|_____|\n");
 
 }
 
